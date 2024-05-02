@@ -95,13 +95,13 @@ public class BattleSystem : MonoBehaviour
         {
             state = BattleState.Player2Turn;
             dialogueText.text = "Player 2's turn!";
-            StartTurn();
+            
         }
         else if (state == BattleState.Player2Turn)
         {
             state = BattleState.Player1Turn;
             dialogueText.text = "Player 1's turn!";
-            StartTurn();
+            
         }
     }
     
