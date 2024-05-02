@@ -152,9 +152,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitName: Male Mage
-  unitLevel: 1
   meleeDamage: 20
   rangedDamage: 15
-  specialAttack: 50
+  block: 0
+  buff: 0
+  specialAttack: 0
+  heal: 50
   maxHealth: 80
   currentHealth: 80
