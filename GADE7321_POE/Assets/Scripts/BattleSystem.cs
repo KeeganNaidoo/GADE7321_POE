@@ -96,12 +96,12 @@ public class BattleSystem : MonoBehaviour
         {
             case BattleState.Player1Turn:
                 Debug.Log("Player 1's turn!");
-                dialogueText.text = "Player 1's turn!\nChoose an action:";
+                dialogueText.text = "Player 1's turn!\nChoose a Character:";
                 // Call a method to handle player 1's turn
                 break;
             case BattleState.Player2Turn:
                 Debug.Log("Player 2's turn!");
-                dialogueText.text = "Player 2's turn!\nChoose an action:";
+                dialogueText.text = "Player 2's turn!\nChoose a Character:";
                 // Call a method to handle player 2's turn
                 break;
         }
