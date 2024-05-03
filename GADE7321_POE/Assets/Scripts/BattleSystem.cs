@@ -184,6 +184,12 @@ public class BattleSystem : MonoBehaviour
         StartTurn();
     }
     
+    /// <summary>
+    /// This code snippet defines the StartTurn function in the BattleSystem class.
+    /// It checks the state variable to determine if it's Player1Turn or Player2Turn,
+    /// and sets the appropriate dialogue text,
+    /// and adjusts the visibility of character select panels accordingly for each player's turn.
+    /// </summary>
     void StartTurn()
     {
         switch (state)
@@ -253,6 +259,7 @@ public class BattleSystem : MonoBehaviour
         selectedUnit.Attack(AttackType);
     }
     
+    /*
     IEnumerator Character1MeleeAttack()
     {
         // target unit is the enemy Character the current player chooses to attack & and then call a method to deal damage to the enemy 
@@ -274,6 +281,7 @@ public class BattleSystem : MonoBehaviour
             SwitchToOpponentTurn();
         }
     }
+    
     
     IEnumerator Character1RangedAttack()
     {
@@ -336,10 +344,21 @@ public class BattleSystem : MonoBehaviour
     {
         StartCoroutine(Character1RangedAttack());
     }
-    
+    */
     
 
-    
+    void StartTurn()
+    {
+        if (state == BattleState.Player1Turn)
+        {
+            // Set UI elements for Player 1's turn
+        }
+        else if (state == BattleState.Player2Turn)
+        {
+            // Set UI elements for Player 2's turn
+        }
+        // Enable character selection UI
+        characterSelectPanel.SetActive(true);}
     
     /*
     // Method to handle when a player chooses a character to attack with
