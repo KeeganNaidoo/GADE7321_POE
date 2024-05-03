@@ -347,18 +347,7 @@ public class BattleSystem : MonoBehaviour
     */
     
 
-    void StartTurn()
-    {
-        if (state == BattleState.Player1Turn)
-        {
-            // Set UI elements for Player 1's turn
-        }
-        else if (state == BattleState.Player2Turn)
-        {
-            // Set UI elements for Player 2's turn
-        }
-        // Enable character selection UI
-        characterSelectPanel.SetActive(true);}
+    
     
     /*
     // Method to handle when a player chooses a character to attack with
