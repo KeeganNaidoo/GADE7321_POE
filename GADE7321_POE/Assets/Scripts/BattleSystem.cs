@@ -43,15 +43,15 @@ public class BattleSystem : MonoBehaviour
     public GameObject p2Character2ActionsPanel;
     
     // Variables to store character buttons
-    public Button character1Button;
-    public Button character2Button;
+    //public Button character1Button;
+    //public Button character2Button;
 
     // Indicator prefab
-    public GameObject indicatorPrefab;
+    //public GameObject indicatorPrefab;
 
     // Variables to store the instantiated indicators
-    private GameObject _character1Indicator;
-    private GameObject _character2Indicator;
+    //private GameObject _character1Indicator;
+    //private GameObject _character2Indicator;
     
     public BattleState state;
     
@@ -66,6 +66,16 @@ public class BattleSystem : MonoBehaviour
         p2CharacterSelectPanel.SetActive(false);
     }
     
+    /// <summary>
+    /// This code snippet defines an IEnumerator function named SetupBattle.
+    /// It instantiates game objects for player characters,
+    /// retrieves their associated Unit components,
+    /// sets up dialogue text for the battle scenario,
+    /// updates the HUD for each player character,
+    /// waits for 2 seconds using yield return new WaitForSeconds(2f),
+    /// and then calls a method to randomize player turns.
+    /// </summary>
+    /// <returns></returns>
     IEnumerator SetupBattle()
     {
         GameObject player1Character1 = Instantiate(player1Prefab1, player1Character1BattleStation);
@@ -113,6 +123,12 @@ public class BattleSystem : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// This code snippet randomly selects which player gets to start a turn in a game.
+    /// It uses UnityEngine.Random.Range(0, 2) to randomly choose between 0 and 1,
+    /// assigning the turn to either Player 1 or Player 2 accordingly.
+    /// Finally, it calls the StartTurn() function to begin the game sequence.
+    /// </summary>
     void RandomisePlayerTurn()
     {
         if (UnityEngine.Random.Range(0, 2) == 0)
