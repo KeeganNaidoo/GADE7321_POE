@@ -41,6 +41,9 @@ public class PanelOpener : MonoBehaviour
             p1Character1Panel.SetActive(true);
             dialogueText.text = "Player 1's turn!\n" + selectedPlayerUnit + " chosen\nChoose an Action:";
             SelectPlayerUnit("Player 1 Unit 1");
+            BattleSystem.instance.characterSelected = "melee";
+            BattleSystem.instance.playerTurn = 1;
+            
         }
         
     }
@@ -53,6 +56,8 @@ public class PanelOpener : MonoBehaviour
             p1Character2Panel.SetActive(true);
             dialogueText.text = "Player 1's turn!\n" + selectedPlayerUnit + " chosen\nChoose an Action:";
             SelectPlayerUnit("Player 1 Unit 2");
+            BattleSystem.instance.characterSelected = "Ranged";
+            BattleSystem.instance.playerTurn = 1;
         }
         
     }
@@ -65,6 +70,8 @@ public class PanelOpener : MonoBehaviour
             p2Character1Panel.SetActive(true);
             dialogueText.text = "Player 2's turn!\n" + selectedPlayerUnit + " chosen\nChoose an Action:";
             SelectPlayerUnit("Player 2 Unit 1");
+            BattleSystem.instance.characterSelected = "melee";
+            BattleSystem.instance.playerTurn = 2;
         }
         
     }
@@ -77,6 +84,8 @@ public class PanelOpener : MonoBehaviour
             p2Character2Panel.SetActive(true);
             dialogueText.text = "Player 2's turn!\n" + selectedPlayerUnit + " chosen\nChoose an Action:";
             SelectPlayerUnit("Player 2 Unit 2");
+            BattleSystem.instance.characterSelected = "Ranged";
+            BattleSystem.instance.playerTurn = 2;
         }
         
     }

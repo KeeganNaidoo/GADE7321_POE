@@ -8,6 +8,7 @@ public enum BattleState { Start, Player1Turn, Player2Turn, Winner }
 
 public class BattleSystem : MonoBehaviour
 {
+    public static BattleSystem instance;
     public GameObject player1Prefab1;
     public GameObject player1Prefab2;
     public GameObject player2Prefab1;
@@ -41,6 +42,18 @@ public class BattleSystem : MonoBehaviour
     public GameObject p1Character2ActionsPanel;
     public GameObject p2Character1ActionsPanel;
     public GameObject p2Character2ActionsPanel;
+
+    public GameObject player1HUD1;
+    public GameObject player1HUD2;
+    public GameObject player2HUD1;
+    public GameObject player2HUD2;
+
+    public string characterSelected;
+    public string targetSelected = "melee";
+
+    public int playerTurn;
+    
+    public GameObject hudPrefab;
     
     // Variables to store character buttons
     //public Button character1Button;
@@ -65,7 +78,15 @@ public class BattleSystem : MonoBehaviour
         p1CharacterSelectPanel.SetActive(false);
         p2CharacterSelectPanel.SetActive(false);
     }
-    
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
+
     /// <summary>
     /// This code snippet defines an IEnumerator function named SetupBattle.
     /// It instantiates game objects for player characters,
@@ -80,26 +101,42 @@ public class BattleSystem : MonoBehaviour
     {
         GameObject player1Character1 = Instantiate(player1Prefab1, player1Character1BattleStation);
         player1Unit1 =player1Character1.GetComponent<Unit>();
+        GameObject _player1HUD = Instantiate(hudPrefab, player1HUD1.transform);
+        player1Unit1.unitHUD = _player1HUD.GetComponent<BattleHUD>();
+        player1Unit1.unitName = "P1U1";
+        
         GameObject player1Character2 = Instantiate(player1Prefab2, player1Character2BattleStation);
         player1Unit2 =player1Character2.GetComponent<Unit>();
+        GameObject __player1HUD = Instantiate(hudPrefab, player1HUD2.transform);
+        player1Unit2.unitHUD = __player1HUD.GetComponent<BattleHUD>();
+        player1Unit2.unitName = "P1U2";
+        
         GameObject player2Character1 = Instantiate(player2Prefab1, player2Character1BattleStation);
         player2Unit1 =player2Character1.GetComponent<Unit>();
+        GameObject _player2HUD = Instantiate(hudPrefab, player2HUD1.transform);
+        player2Unit1.unitHUD = _player2HUD.GetComponent<BattleHUD>();
+        player2Unit2.unitName = "P2U1";
+        
+        
         GameObject player2Character2 = Instantiate(player2Prefab2, player2Character2BattleStation);
         player2Unit2 =player2Character2.GetComponent<Unit>();
+        GameObject __player2HUD = Instantiate(hudPrefab, player2HUD2.transform);
+        player2Unit2.unitHUD = __player2HUD.GetComponent<BattleHUD>();
+        player2Unit2.unitName = "P2U2";
         
         dialogueText.text = "Battle begins!\nPlayer 1: " + player1Unit1.unitName + " and " + player1Unit2.unitName + "\nVS\nPlayer 2: " + player2Unit1.unitName + " and " + player2Unit2.unitName;
         
-        player1Character1HUD.SetHUD(player1Unit1);
-        player1Character2HUD.SetHUD(player1Unit2);
-        player2Character1HUD.SetHUD(player2Unit1);
-        player2Character2HUD.SetHUD(player2Unit2);
+        _player1HUD.GetComponent<BattleHUD>().SetHUD(player1Unit1);
+        __player1HUD.GetComponent<BattleHUD>().SetHUD(player1Unit2);
+        _player2HUD.GetComponent<BattleHUD>().SetHUD(player2Unit1);
+        __player2HUD.GetComponent<BattleHUD>().SetHUD(player2Unit2);
 
         yield return new WaitForSeconds(2f);
         
         RandomisePlayerTurn();
     }
     
-    void SwitchToOpponentTurn()
+    public void SwitchToOpponentTurn()
     {
         if (state == BattleState.Player1Turn)
         {
@@ -115,7 +152,7 @@ public class BattleSystem : MonoBehaviour
         }
     }
     
-    void EndBattle()
+    public void EndBattle()
     {
         if (state == BattleState.Winner)
         {
@@ -168,6 +205,52 @@ public class BattleSystem : MonoBehaviour
                 p2CharacterSelectPanel.SetActive(true);
                 break;
         }
+    }
+
+    public void CharacterAttack(string AttackType)
+    {
+        Unit selectedUnit = null;
+        if (playerTurn == 1)
+        {
+            if (characterSelected == "melee")
+            {
+                selectedUnit = player1Unit1;
+            }
+            else
+            {
+                selectedUnit = player1Unit2;
+            }
+
+            if (targetSelected == "melee")
+            {
+                selectedUnit.targetUnit = player2Unit1;
+            }
+            else
+            {
+                selectedUnit.targetUnit = player2Unit2;
+            }
+        }
+        else
+        {
+            if (characterSelected == "melee")
+            {
+                selectedUnit = player2Unit1;
+            }
+            else
+            {
+                selectedUnit = player2Unit2;
+            }
+            if (targetSelected == "melee")
+            {
+                selectedUnit.targetUnit = player2Unit1;
+            }
+            else
+            {
+                selectedUnit.targetUnit = player2Unit2;
+            }
+        }
+        
+        selectedUnit.Attack(AttackType);
     }
     
     IEnumerator Character1MeleeAttack()
