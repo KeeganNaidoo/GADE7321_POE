@@ -61,15 +61,16 @@ namespace EnemyAI_scripts
         
         public GameObject playerHUD1;
         public GameObject playerHUD2;
-        public GameObject player2HUD1;
-        public GameObject player2HUD2;
+        public GameObject enemyHUD1;
+        public GameObject enemyHUD2;
 
-        private string selectedCharacter; // Currently selected character
-        private string selectedAction; // Currently selected action
+        private string _selectedCharacter; // Currently selected character
+        private string _selectedAction; // Currently selected action
+        private string _selectedEnemy; // Currently selected enemy
     
         public AIBattleState state; // Current state of the battle
-        private MinimaxAI minimaxAI; // Instance of the MinimaxAI class
-        private AIGameState gameState; // Current game state
+        private MinimaxAI _minimaxAI; // Instance of the MinimaxAI class
+        private AIGameState _gameState; // Current game state
 
         void Awake()
         {
@@ -98,7 +99,7 @@ namespace EnemyAI_scripts
             enemyKnightButton.onClick.AddListener(() => OnEnemySelect("EnemyKnight"));
             enemyMageButton.onClick.AddListener(() => OnEnemySelect("EnemyMage"));
         
-            minimaxAI = new MinimaxAI();
+            _minimaxAI = new MinimaxAI();
             state = AIBattleState.AIStart;
             SetupPveBattle(); // Set up the battle at the start of the game
         }
@@ -106,7 +107,7 @@ namespace EnemyAI_scripts
         // Method to set up the battle
         void SetupPveBattle()
         {
-            gameState = new AIGameState
+            _gameState = new AIGameState
             {
                 playerKnightHealth = 100,
                 playerMageHealth = 80,
@@ -151,10 +152,10 @@ namespace EnemyAI_scripts
             //enemyUnit1.unitName = "WHITE SKELETON";
             
             GameObject enemyCharacter1 = Instantiate(enemyPrefab1, enemyCharacter1BattleStation);
-            Unit enemy1Unit = enemyCharacter1.GetComponent<Unit>();
+            Unit enemyUnit1 = enemyCharacter1.GetComponent<Unit>();
             GameObject enemy1HUD = Instantiate(hudPrefab, enemy1HUDPosition);
-            enemy1Unit.unitHUD = enemy1HUD.GetComponent<BattleHUD>();
-            enemy1Unit.unitHUD.SetHUD(enemy1Unit);
+            enemyUnit1.unitHUD = enemy1HUD.GetComponent<BattleHUD>();
+            enemyUnit1.unitHUD.SetHUD(enemyUnit1);
         
             //GameObject enemyCharacter2 = Instantiate(enemyPrefab2, enemyCharacter2BattleStation);
             //enemyUnit2 =enemyCharacter2.GetComponent<Unit>();
@@ -163,10 +164,10 @@ namespace EnemyAI_scripts
             //enemyUnit2.unitName = "BROWN SKELETON";
             
             GameObject enemyCharacter2 = Instantiate(enemyPrefab2, enemyCharacter2BattleStation);
-            Unit enemy2Unit = enemyCharacter2.GetComponent<Unit>();
+            Unit enemyUnit2 = enemyCharacter2.GetComponent<Unit>();
             GameObject enemy2HUD = Instantiate(hudPrefab, enemy2HUDPosition);
-            enemy2Unit.unitHUD = enemy2HUD.GetComponent<BattleHUD>();
-            enemy2Unit.unitHUD.SetHUD(enemy2Unit);
+            enemyUnit2.unitHUD = enemy2HUD.GetComponent<BattleHUD>();
+            enemyUnit2.unitHUD.SetHUD(enemyUnit2);
         
         }
         // Method to randomly determine which player goes first
@@ -175,12 +176,12 @@ namespace EnemyAI_scripts
             if (UnityEngine.Random.Range(0, 2) == 0)
             {
                 state = AIBattleState.AIPlayerTurn;
-                gameState.isPlayerTurn = true;
+                _gameState.isPlayerTurn = true;
             }
             else
             {
                 state = AIBattleState.AIEnemyTurn;
-                gameState.isPlayerTurn = false;
+                _gameState.isPlayerTurn = false;
             }
             StartTurn(); // Start the first turn
         }
@@ -192,6 +193,7 @@ namespace EnemyAI_scripts
             {
                 // Enable player UI, character selection, etc.
                 dialogueText.text = "Your turn! Choose a character.";
+                Debug.Log("Player's turn");
                 EnablePanel(characterSelectPanel, true);
             }
             else if (state == AIBattleState.AIEnemyTurn)
@@ -204,10 +206,11 @@ namespace EnemyAI_scripts
         IEnumerator EnemyTurn()
         {
             dialogueText.text = "Enemy's turn...";
+            Debug.Log("Enemy's turn"); // Log that the enemy's turn has started();
             yield return new WaitForSeconds(2f); // Wait for a second before the enemy acts
 
-            var bestMove = minimaxAI.GetBestMove(gameState); // Get the best move for the AI
-            gameState = minimaxAI.SimulateMove(gameState, bestMove); // Simulate the AI's move
+            var bestMove = _minimaxAI.GetBestMove(_gameState); // Get the best move for the AI
+            _gameState = _minimaxAI.SimulateMove(_gameState, bestMove); // Simulate the AI's move
 
             //UpdateGameStateUI(); // Update the game state UI
 
@@ -219,94 +222,105 @@ namespace EnemyAI_scripts
             else
             {
                 state = AIBattleState.AIPlayerTurn; // Switch to the player's turn
-                gameState.isPlayerTurn = true;
+                _gameState.isPlayerTurn = true;
                 StartTurn(); // Start the player's turn
             }
         }
 
         void OnCharacterSelect(string character)
         {
-            selectedCharacter = character;
+            _selectedCharacter = character;
             EnablePanel(characterSelectPanel, false);
 
             if (character == "Knight")
             {
                 dialogueText.text = character + " selected. Choose an action:";
+                Debug.Log("knight selected");
                 EnablePanel(knightActionPanel, true);
             }
             else if (character == "Mage")
             {
                 dialogueText.text = character + " selected. Choose an action:";
+                Debug.Log("mage selected");
                 EnablePanel(mageActionPanel, true);
             }
         }
 
         void OnActionSelect(string action)
         {
-            selectedAction = action;
+            _selectedAction = action;
             EnablePanel(knightActionPanel, false);
             EnablePanel(mageActionPanel, false);
             EnablePanel(enemySelectPanel, true);
 
-            if (selectedAction == "melee")
+            if (_selectedAction == "melee")
             {
                 dialogueText.text = "Melee Attack selected. Choose an enemy:";
+                Debug.Log("melee attack selected"); // Log that the melee attack has been selected();
             }
-            else if (selectedAction == "ranged")
+            else if (_selectedAction == "ranged")
             {
                 dialogueText.text = "Ranged Attack selected. Choose an enemy:";
+                Debug.Log("ranged attack selected");
             }
-            else if (selectedAction == "heal")
+            else if (_selectedAction == "heal")
             {
                 dialogueText.text = "Heal selected. Choose a character:";
+                Debug.Log("heal selected");
             }
-            else if (selectedAction == "buff")
+            else if (_selectedAction == "buff")
             {
                 dialogueText.text = "Buff selected. Choose a character:";
+                Debug.Log("buff selected");
             }
-            else if (selectedAction == "special Attack")
+            else if (_selectedAction == "special Attack")
             {
                 dialogueText.text = "OH YES!!! Special Attack selected. Choose an enemy:";
+                Debug.Log("special attack selected");
             }
-            else if (selectedAction == "defend")
+            else if (_selectedAction == "defend")
             {
                 dialogueText.text = "defend selected. Choose a character:";
+                Debug.Log("defend selected");
             }
         }
 
         void OnEnemySelect(string enemy)
         {
+            _selectedEnemy = enemy;
             // Find the target unit and perform the selected action
             Unit target = null;
             if (enemy == "EnemyKnight")
             {
                 target = enemy1HUD.unit;
+                Debug.Log("Enemy knight selected");
             }
             else if (enemy == "EnemyMage")
             {
                 target = enemy2HUD.unit;
+                Debug.Log("Enemy mage selected");
             }
 
             // Perform the selected action on the target unit
-            if (selectedCharacter == "Knight")
+            if (_selectedCharacter == "Knight")
             {
                 playerKnightHUD.unit.targetUnit = target;
-                playerKnightHUD.unit.Attack(selectedAction);
+                playerKnightHUD.unit.Attack(_selectedAction);
             }
-            else if (selectedCharacter == "Mage")
+            else if (_selectedCharacter == "Mage")
             {
                 playerMageHUD.unit.targetUnit = target;
-                if (selectedAction == "heal")
+                if (_selectedAction == "heal")
                 {
                     playerMageHUD.unit.Heal(target);
                 }
-                else if (selectedAction == "buff")
+                else if (_selectedAction == "buff")
                 {
                     playerMageHUD.unit.ApplyBuff(target);
                 }
                 else
                 {
-                    playerMageHUD.unit.Attack(selectedAction);
+                    playerMageHUD.unit.Attack(_selectedAction);
                 }
             }
 
