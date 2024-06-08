@@ -231,10 +231,12 @@ namespace EnemyAI_scripts
 
             if (character == "Knight")
             {
+                dialogueText.text = character + " selected. Choose an action:";
                 EnablePanel(knightActionPanel, true);
             }
             else if (character == "Mage")
             {
+                dialogueText.text = character + " selected. Choose an action:";
                 EnablePanel(mageActionPanel, true);
             }
         }
@@ -245,6 +247,31 @@ namespace EnemyAI_scripts
             EnablePanel(knightActionPanel, false);
             EnablePanel(mageActionPanel, false);
             EnablePanel(enemySelectPanel, true);
+
+            if (selectedAction == "melee")
+            {
+                dialogueText.text = "Melee Attack selected. Choose an enemy:";
+            }
+            else if (selectedAction == "ranged")
+            {
+                dialogueText.text = "Ranged Attack selected. Choose an enemy:";
+            }
+            else if (selectedAction == "heal")
+            {
+                dialogueText.text = "Heal selected. Choose a character:";
+            }
+            else if (selectedAction == "buff")
+            {
+                dialogueText.text = "Buff selected. Choose a character:";
+            }
+            else if (selectedAction == "special Attack")
+            {
+                dialogueText.text = "OH YES!!! Special Attack selected. Choose an enemy:";
+            }
+            else if (selectedAction == "defend")
+            {
+                dialogueText.text = "defend selected. Choose a character:";
+            }
         }
 
         void OnEnemySelect(string enemy)
