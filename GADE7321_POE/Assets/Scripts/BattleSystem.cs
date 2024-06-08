@@ -71,12 +71,13 @@ public class BattleSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        state = BattleState.Start;
-        StartCoroutine(SetupBattle());
-        
         // disable button panels on start
         p1CharacterSelectPanel.SetActive(false);
         p2CharacterSelectPanel.SetActive(false);
+        state = BattleState.Start;
+        StartCoroutine(SetupBattle());
+        
+        
     }
 
     private void Awake()
@@ -87,6 +88,7 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis
     /// <summary>
     /// This code snippet defines an IEnumerator function named SetupBattle.
     /// It instantiates game objects for player characters,
@@ -125,11 +127,12 @@ public class BattleSystem : MonoBehaviour
         player2Unit2.unitName = "P2U2";
         
         dialogueText.text = "Battle begins!\nPlayer 1: " + player1Unit1.unitName + " and " + player1Unit2.unitName + "\nVS\nPlayer 2: " + player2Unit1.unitName + " and " + player2Unit2.unitName;
-        
+        /*
         _player1HUD.GetComponent<BattleHUD>().SetHUD(player1Unit1);
         __player1HUD.GetComponent<BattleHUD>().SetHUD(player1Unit2);
         _player2HUD.GetComponent<BattleHUD>().SetHUD(player2Unit1);
         __player2HUD.GetComponent<BattleHUD>().SetHUD(player2Unit2);
+        */
 
         yield return new WaitForSeconds(2f);
         
@@ -213,12 +216,13 @@ public class BattleSystem : MonoBehaviour
         }
     }
 
-    public void CharacterAttack(string AttackType)
+    
+    public void CharacterAttack(string characterSelected, string targetSelected, string attackType)
     {
         Unit selectedUnit = null;
         if (playerTurn == 1)
         {
-            if (characterSelected == "melee")
+            if (characterSelected == "knight")
             {
                 selectedUnit = player1Unit1;
             }
@@ -227,7 +231,7 @@ public class BattleSystem : MonoBehaviour
                 selectedUnit = player1Unit2;
             }
 
-            if (targetSelected == "melee")
+            if (targetSelected == "skeleton 1")
             {
                 selectedUnit.targetUnit = player2Unit1;
             }
@@ -238,7 +242,7 @@ public class BattleSystem : MonoBehaviour
         }
         else
         {
-            if (characterSelected == "melee")
+            if (characterSelected == "mage")
             {
                 selectedUnit = player2Unit1;
             }
@@ -256,10 +260,10 @@ public class BattleSystem : MonoBehaviour
             }
         }
         
-        selectedUnit.Attack(AttackType);
+        selectedUnit.Attack(attackType);
     }
     
-    /*
+    
     IEnumerator Character1MeleeAttack()
     {
         // target unit is the enemy Character the current player chooses to attack & and then call a method to deal damage to the enemy 
@@ -344,7 +348,7 @@ public class BattleSystem : MonoBehaviour
     {
         StartCoroutine(Character1RangedAttack());
     }
-    */
+    
     
 
     
