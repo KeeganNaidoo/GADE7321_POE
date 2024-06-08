@@ -92,6 +92,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nameText: {fileID: 4377085882558388442}
   hpSlider: {fileID: 6587668201813484254}
+  unit: {fileID: 0}
 --- !u!1 &3987596607589004420
 GameObject:
   m_ObjectHideFlags: 0
@@ -158,13 +159,13 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 12800000, guid: 1a2389c29f326034a8466134a1d9c5ac, type: 3}
-    m_FontSize: 30
+    m_Font: {fileID: 12800000, guid: 31e537f2b88fb684c822d70e53f76f43, type: 3}
+    m_FontSize: 12
     m_FontStyle: 0
     m_BestFit: 1
     m_MinSize: 0
     m_MaxSize: 40
-    m_Alignment: 3
+    m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0

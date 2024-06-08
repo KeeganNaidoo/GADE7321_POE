@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using EnemyAI_scripts;
 using UnityEngine;
 
 public class Unit : MonoBehaviour
@@ -41,8 +42,8 @@ public class Unit : MonoBehaviour
     
     public void Attack(string attackType)
     {
-        // target unit is the enemy Character the current player chooses to attack & and then call a method to deal damage to the enemy 
         bool isDead = false;
+
         switch (attackType)
         {
             case "melee":
@@ -51,24 +52,39 @@ public class Unit : MonoBehaviour
             case "ranged":
                 isDead = targetUnit.TakeDamage(rangedDamage);
                 break;
+            case "special":
+                isDead = targetUnit.TakeDamage(specialAttack);
+                break;
         }
-        
-        targetUnit.unitHUD.SetHP(targetUnit.currentHealth);
-        Debug.Log("name" + unitName + "Attacks" + targetUnit.unitName + "Health" + targetUnit.currentHealth);
-        // figure out how to wait for a sec
-        
-        // call a method to identify if the opponents character is still alive and which is the current state and switch to other players state
+
+        unitHUD.SetHP(currentHealth);
+        Debug.Log(unitName + " attacks " + targetUnit.unitName + " with " + attackType + " attack. Remaining HP: " + targetUnit.currentHealth);
+
         if (isDead)
         {
-            BattleSystem.instance.state = BattleState.Winner;
+            AIBattleSystem.instance.state = AIBattleState.AIWinner;
             BattleSystem.instance.EndBattle();
-            
-            // end battle
         }
         else
         {
-            // call a method to identify which is the current state and switch to other players state
             BattleSystem.instance.SwitchToOpponentTurn();
         }
+    }
+
+    public void Heal(Unit target)
+    {
+        target.currentHealth += heal;
+        if (target.currentHealth > target.maxHealth)
+        {
+            target.currentHealth = target.maxHealth;
+        }
+        target.unitHUD.SetHP(target.currentHealth);
+        BattleSystem.instance.SwitchToOpponentTurn();
+    }
+
+    public void ApplyBuff(Unit target)
+    {
+        target.buff = (int)(target.meleeDamage * 1.5);
+        BattleSystem.instance.SwitchToOpponentTurn();
     }
 }

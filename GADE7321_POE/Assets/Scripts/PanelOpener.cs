@@ -26,7 +26,7 @@ public class PanelOpener : MonoBehaviour
         p2Character2Panel.SetActive(false);
     }
     
-    public void SelectPlayerUnit(string unitName)
+    void SelectPlayerUnit(string unitName)
     {
         selectedPlayerUnit = unitName;
         // You can perform additional actions here based on the selected unit
