@@ -19,6 +19,11 @@ public class BattleSystem : MonoBehaviour
     public Transform player2Character1BattleStation;
     public Transform player2Character2BattleStation;
     
+    public Transform player1Character1HUDPosition;
+    public Transform player1Character2HUDPosition;
+    public Transform player2Character1HUDPosition;
+    public Transform player2Character2HUDPosition;
+    
     public Unit player1Unit1;
     public Unit player1Unit2;
     public Unit player2Unit1;
@@ -43,13 +48,8 @@ public class BattleSystem : MonoBehaviour
     public GameObject p2Character1ActionsPanel;
     public GameObject p2Character2ActionsPanel;
 
-    public GameObject player1HUD1;
-    public GameObject player1HUD2;
-    public GameObject player2HUD1;
-    public GameObject player2HUD2;
-
     public string characterSelected;
-    public string targetSelected = "melee";
+    public string targetSelected;
 
     public int playerTurn;
     
@@ -102,28 +102,31 @@ public class BattleSystem : MonoBehaviour
     IEnumerator SetupBattle()
     {
         GameObject player1Character1 = Instantiate(player1Prefab1, player1Character1BattleStation);
-        player1Unit1 =player1Character1.GetComponent<Unit>();
-        GameObject _player1HUD = Instantiate(hudPrefab, player1HUD1.transform);
+        Unit player1Unit1 =player1Character1.GetComponent<Unit>();
+        GameObject _player1HUD = Instantiate(hudPrefab, player1Character1HUDPosition);
         player1Unit1.unitHUD = _player1HUD.GetComponent<BattleHUD>();
+        player1Unit1.unitHUD.SetHUD(player1Unit1);
         player1Unit1.unitName = "P1U1";
         
         GameObject player1Character2 = Instantiate(player1Prefab2, player1Character2BattleStation);
-        player1Unit2 =player1Character2.GetComponent<Unit>();
-        GameObject __player1HUD = Instantiate(hudPrefab, player1HUD2.transform);
+        Unit player1Unit2 =player1Character2.GetComponent<Unit>();
+        GameObject __player1HUD = Instantiate(hudPrefab, player1Character2HUDPosition);
         player1Unit2.unitHUD = __player1HUD.GetComponent<BattleHUD>();
+        player1Unit2.unitHUD.SetHUD(player1Unit2);
         player1Unit2.unitName = "P1U2";
         
         GameObject player2Character1 = Instantiate(player2Prefab1, player2Character1BattleStation);
-        player2Unit1 =player2Character1.GetComponent<Unit>();
-        GameObject _player2HUD = Instantiate(hudPrefab, player2HUD1.transform);
+        Unit player2Unit1 =player2Character1.GetComponent<Unit>();
+        GameObject _player2HUD = Instantiate(hudPrefab, player2Character1HUDPosition);
         player2Unit1.unitHUD = _player2HUD.GetComponent<BattleHUD>();
-        player2Unit2.unitName = "P2U1";
-        
+        player2Unit1.unitHUD.SetHUD(player2Unit1);
+        player2Unit1.unitName = "P2U1";
         
         GameObject player2Character2 = Instantiate(player2Prefab2, player2Character2BattleStation);
-        player2Unit2 =player2Character2.GetComponent<Unit>();
-        GameObject __player2HUD = Instantiate(hudPrefab, player2HUD2.transform);
+        Unit player2Unit2 =player2Character2.GetComponent<Unit>();
+        GameObject __player2HUD = Instantiate(hudPrefab, player2Character2HUDPosition);
         player2Unit2.unitHUD = __player2HUD.GetComponent<BattleHUD>();
+        player2Unit2.unitHUD.SetHUD(player2Unit2);
         player2Unit2.unitName = "P2U2";
         
         dialogueText.text = "Battle begins!\nPlayer 1: " + player1Unit1.unitName + " and " + player1Unit2.unitName + "\nVS\nPlayer 2: " + player2Unit1.unitName + " and " + player2Unit2.unitName;
@@ -231,7 +234,7 @@ public class BattleSystem : MonoBehaviour
                 selectedUnit = player1Unit2;
             }
 
-            if (targetSelected == "skeleton 1")
+            if (targetSelected == "White Skeleton")
             {
                 selectedUnit.targetUnit = player2Unit1;
             }
@@ -244,19 +247,19 @@ public class BattleSystem : MonoBehaviour
         {
             if (characterSelected == "mage")
             {
-                selectedUnit = player2Unit1;
+                selectedUnit = player1Unit2;
             }
             else
             {
-                selectedUnit = player2Unit2;
+                selectedUnit = player1Unit1;
             }
-            if (targetSelected == "melee")
-            {
-                selectedUnit.targetUnit = player2Unit1;
-            }
-            else
+            if (targetSelected == "Old Skeleton")
             {
                 selectedUnit.targetUnit = player2Unit2;
+            }
+            else
+            {
+                selectedUnit.targetUnit = player2Unit1;
             }
         }
         
@@ -293,6 +296,7 @@ public class BattleSystem : MonoBehaviour
         bool isDead = targetUnit.TakeDamage(player1Unit1.rangedDamage);
         targetUnitHUD.SetHP(targetUnit.currentHealth);
         
+        
         yield return new WaitForSeconds(1f);
         
         // call a method to identify if the opponents character is still alive and which is the current state and switch to other players state
@@ -311,21 +315,39 @@ public class BattleSystem : MonoBehaviour
 
     public void OnP1Character1MeleeAttackButton()
     {
+        if (state != BattleState.Player1Turn)
+        {
+            return;
+        }
+        Debug.Log("Melee attack selected");  // Log that the melee attack has been selected
         StartCoroutine(Character1MeleeAttack());
     }
     
     public void OnP1Character1RangedAttackButton()
     {
+        if (state != BattleState.Player1Turn)
+        {
+            return;
+        }
+        Debug.Log("Ranged attack selected");
         StartCoroutine(Character1RangedAttack());
     }
 
     public void OnP2Character1MeleeAttackButton()
     {
+        if (state != BattleState.Player2Turn)
+        {
+            return;
+        }
         StartCoroutine(Character1MeleeAttack());
     }
     
     public void OnP2Character1RangedAttackButton()
     {
+        if (state != BattleState.Player2Turn)
+        {
+            return;
+        }
         StartCoroutine(Character1RangedAttack());
     }
     

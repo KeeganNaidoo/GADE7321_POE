@@ -54,6 +54,9 @@ MonoBehaviour:
   heal: 50
   maxHealth: 80
   currentHealth: 80
+  targetUnit: {fileID: 0}
+  move: 
+  unitHUD: {fileID: 0}
 --- !u!1 &9139801828075579795
 GameObject:
   m_ObjectHideFlags: 0
