@@ -309,8 +309,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1979832343}
         m_TargetAssemblyTypeName: BattleSystem, Assembly-CSharp
-        m_MethodName: CharacterAttack
-        m_Mode: 5
+        m_MethodName: OnP2Character1MeleeAttackButton
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -929,7 +929,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 422850830}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1979832343}
+        m_TargetAssemblyTypeName: BattleSystem, Assembly-CSharp
+        m_MethodName: OnP1Character2MeleeAttackButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &422850830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1886,8 +1898,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1979832343}
         m_TargetAssemblyTypeName: BattleSystem, Assembly-CSharp
-        m_MethodName: CharacterAttack
-        m_Mode: 5
+        m_MethodName: OnP1Character1RangedAttackButton
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2566,8 +2578,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1979832343}
         m_TargetAssemblyTypeName: BattleSystem, Assembly-CSharp
-        m_MethodName: CharacterAttack
-        m_Mode: 5
+        m_MethodName: OnP2Character1RangedAttackButton
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4312,7 +4324,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1307096022}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1979832343}
+        m_TargetAssemblyTypeName: BattleSystem, Assembly-CSharp
+        m_MethodName: OnP1Character2RangedAttackButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1307096022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5085,7 +5109,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1537077403}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1979832343}
+        m_TargetAssemblyTypeName: BattleSystem, Assembly-CSharp
+        m_MethodName: OnP2Character2MeleeAttackButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1537077403
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5209,8 +5245,8 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1979832343}
         m_TargetAssemblyTypeName: BattleSystem, Assembly-CSharp
-        m_MethodName: CharacterAttack
-        m_Mode: 5
+        m_MethodName: OnP1Character1MeleeAttackButton
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -6776,6 +6812,10 @@ MonoBehaviour:
   player1Character2BattleStation: {fileID: 1559152376}
   player2Character1BattleStation: {fileID: 440610395}
   player2Character2BattleStation: {fileID: 925417032}
+  player1Character1HUDPosition: {fileID: 1961230818}
+  player1Character2HUDPosition: {fileID: 1419528032}
+  player2Character1HUDPosition: {fileID: 736151239}
+  player2Character2HUDPosition: {fileID: 966458363}
   player1Unit1: {fileID: 2615793565144902452, guid: 546b6cb89464ac74f98b8d3a4877048b, type: 3}
   player1Unit2: {fileID: 5534907091721304630, guid: 660ee73370585b3499db096e8ab204d7, type: 3}
   player2Unit1: {fileID: 2106689512356197498, guid: 343f73e0d821b794d9de773381aa379b, type: 3}
@@ -6794,14 +6834,10 @@ MonoBehaviour:
   p1Character2ActionsPanel: {fileID: 966515532}
   p2Character1ActionsPanel: {fileID: 1080974007}
   p2Character2ActionsPanel: {fileID: 2128413324}
-  player1HUD1: {fileID: 1961230817}
-  player1HUD2: {fileID: 1419528031}
-  player2HUD1: {fileID: 736151238}
-  player2HUD2: {fileID: 966458362}
   characterSelected: 
   targetSelected: 
   playerTurn: 0
-  hudPrefab: {fileID: 5462739300289101083, guid: 1dfa2569bcb182e439c67d5e3fdddc31, type: 3}
+  hudPrefab: {fileID: 67921225701778093, guid: b6ab92031b9da41428ea58714b37c0e8, type: 3}
   state: 0
 --- !u!1 &1990503894
 GameObject:
@@ -7490,7 +7526,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2133847030}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1979832343}
+        m_TargetAssemblyTypeName: BattleSystem, Assembly-CSharp
+        m_MethodName: OnP2Character2RangedAttackButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2133847030
 MonoBehaviour:
   m_ObjectHideFlags: 0

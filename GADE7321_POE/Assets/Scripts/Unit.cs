@@ -40,7 +40,7 @@ public class Unit : MonoBehaviour
     }
 
     
-    public void Attack(string attackType)
+    public void Attack(string target,string attackType)
     {
         bool isDead = false;
 
@@ -57,7 +57,9 @@ public class Unit : MonoBehaviour
                 break;
         }
 
-        unitHUD.SetHP(currentHealth);
+        //enemyHUD.SetHP(target.currentHealth); // targetUnitcurrentHealth
+        //unitHUD.SetHP(currentHealth);
+        
         Debug.Log(unitName + " attacks " + targetUnit.unitName + " with " + attackType + " attack. Remaining HP: " + targetUnit.currentHealth);
 
         if (isDead)
@@ -86,5 +88,11 @@ public class Unit : MonoBehaviour
     {
         target.buff = (int)(target.meleeDamage * 1.5);
         BattleSystem.instance.SwitchToOpponentTurn();
+    }
+
+
+    public void Attack(string attackType)
+    {
+        throw new System.NotImplementedException();
     }
 }

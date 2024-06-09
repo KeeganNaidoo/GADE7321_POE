@@ -34,6 +34,11 @@ namespace EnemyAI_scripts
         public Unit playerUnit2;
         public Unit enemyUnit1;
         public Unit enemyUnit2;
+        
+        private Unit playerKnight;
+        private Unit playerMage;
+        private Unit enemyKnight;
+        private Unit enemyMage;
     
         public Button knightButton; // Button to select knight character
         public Button mageButton; // Button to select mage character
@@ -207,12 +212,22 @@ namespace EnemyAI_scripts
         {
             dialogueText.text = "Enemy's turn...";
             Debug.Log("Enemy's turn"); // Log that the enemy's turn has started();
-            yield return new WaitForSeconds(2f); // Wait for a second before the enemy acts
+            yield return new WaitForSeconds(1f); // Wait for a second before the enemy acts
 
+            dialogueText.text = "Enemy is thinking of an attack...";
+            Debug.Log("Enemy is thinking of an attack..."); // Log that the enemy is thinking of an attack
+            
+            yield return new WaitForSeconds(3f); // Wait for a second before the AI makes its move
+            
             var bestMove = _minimaxAI.GetBestMove(_gameState); // Get the best move for the AI
             _gameState = _minimaxAI.SimulateMove(_gameState, bestMove); // Simulate the AI's move
 
             //UpdateGameStateUI(); // Update the game state UI
+
+            dialogueText.text = "Enemy " + bestMove.action + " " + bestMove.target; // Log the AI's move
+            Debug.Log("Enemy " + bestMove.action + " " + bestMove.target);
+            
+            yield return new WaitForSeconds(2f); // Wait for a second before the AI makes its next move
 
             if (CheckForWinner()) // Check if there's a winner
             {
@@ -244,6 +259,8 @@ namespace EnemyAI_scripts
                 Debug.Log("mage selected");
                 EnablePanel(mageActionPanel, true);
             }
+            
+            
         }
 
         void OnActionSelect(string action)
@@ -253,34 +270,34 @@ namespace EnemyAI_scripts
             EnablePanel(mageActionPanel, false);
             EnablePanel(enemySelectPanel, true);
 
-            if (_selectedAction == "melee")
+            if (action == "melee")
             {
-                dialogueText.text = "Melee Attack selected. Choose an enemy:";
+                dialogueText.text = action + " Attack selected. Choose an enemy:";
                 Debug.Log("melee attack selected"); // Log that the melee attack has been selected();
             }
-            else if (_selectedAction == "ranged")
+            else if (action == "ranged")
             {
-                dialogueText.text = "Ranged Attack selected. Choose an enemy:";
+                dialogueText.text = action + " Attack selected. Choose an enemy:";
                 Debug.Log("ranged attack selected");
             }
-            else if (_selectedAction == "heal")
+            else if (action == "heal")
             {
-                dialogueText.text = "Heal selected. Choose a character:";
+                dialogueText.text = action + " selected. Choose a character:";
                 Debug.Log("heal selected");
             }
-            else if (_selectedAction == "buff")
+            else if (action == "buff")
             {
-                dialogueText.text = "Buff selected. Choose a character:";
+                dialogueText.text = action + " selected. Choose a character:";
                 Debug.Log("buff selected");
             }
-            else if (_selectedAction == "special Attack")
+            else if (action == "special")
             {
-                dialogueText.text = "OH YES!!! Special Attack selected. Choose an enemy:";
+                dialogueText.text = "OH YES!!!" + action + " Attack selected. Choose an enemy:";
                 Debug.Log("special attack selected");
             }
-            else if (_selectedAction == "defend")
+            else if (action == "defend")
             {
-                dialogueText.text = "defend selected. Choose a character:";
+                dialogueText.text = action + " selected.";
                 Debug.Log("defend selected");
             }
         }
@@ -288,7 +305,20 @@ namespace EnemyAI_scripts
         void OnEnemySelect(string enemy)
         {
             _selectedEnemy = enemy;
+            EnablePanel(enemySelectPanel, false);
+
+            if (enemy == "EnemyKnight")
+            {
+                dialogueText.text = enemy + " selected.";
+                Debug.Log("Enemy knight selected");
+            }
+            else if (enemy == "EnemyMage")
+            {
+                dialogueText.text = enemy + " selected.";
+                Debug.Log("Enemy mage selected");
+            }
             // Find the target unit and perform the selected action
+            /*
             Unit target = null;
             if (enemy == "EnemyKnight")
             {
@@ -322,6 +352,24 @@ namespace EnemyAI_scripts
                 {
                     playerMageHUD.unit.Attack(_selectedAction);
                 }
+            }*/
+            
+            Unit targetUnit = null;
+            
+            switch (enemy)
+            {
+                case "Knight":
+                    targetUnit = enemyKnight;
+                    break;
+                case "Mage":
+                    targetUnit = enemyMage;
+                    break;
+            }
+
+            if (_selectedCharacter != null && targetUnit != null)
+            {
+               //_selectedCharacter.Attack(_selectedEnemy, _selectedAction);
+               Debug.Log("Selected Character: " + _selectedCharacter + " Target Unit: " + targetUnit + " Action: " + _selectedAction); // Log the selected character and action();
             }
 
             EnablePanel(enemySelectPanel, false);
