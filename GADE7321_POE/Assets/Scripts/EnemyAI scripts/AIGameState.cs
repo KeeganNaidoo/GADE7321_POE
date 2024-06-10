@@ -151,12 +151,12 @@ public class MinimaxAI
             case "Melee Attack":
                 if (move.target == "Player Knight")
                 {
-                    Debug.Log("Player knight health: " + newState.playerKnightHealth);
+                    Debug.Log("AiSIM Player knight health: " + newState.playerKnightHealth);
                     newState.playerKnightHealth -= 20;
                 }
                 else if (move.target == "Player Mage")
                 {
-                    Debug.Log("Player mage health: " + newState.playerMageHealth);
+                    Debug.Log("AiSIM Player mage health: " + newState.playerMageHealth);
                     newState.playerMageHealth -= 20;
                 }
                 //else if (move.target == "PlayerKnight") newState.playerKnightHealth -= 20;
@@ -168,23 +168,23 @@ public class MinimaxAI
                 if (move.target == "Player Knight")
                 {
                     newState.playerKnightHealth -= 15;
-                    Debug.Log("Player knight health: " + newState.playerKnightHealth);
+                    Debug.Log("AiSIM Player knight health: " + newState.playerKnightHealth);
                 }
                 else if (move.target == "Player Mage")
                 {
                     newState.playerMageHealth -= 15;
-                    Debug.Log("Player mage health: " + newState.playerMageHealth);
+                    Debug.Log("AiSIM Player mage health: " + newState.playerMageHealth);
                 }
                 break;
             case "Shield":
                 if (move.target == "EnemyKnight")
                 {
-                    Debug.Log("Player knight health: " + newState.enemyKnightHealth);
+                    Debug.Log("AiSIM Player knight health: " + newState.enemyKnightHealth);
                     newState.enemyKnightHealth -= 20; // Reduce health by 50%
                 }
                 else if (move.target == "EnemyMage")
                 {
-                    Debug.Log("Player mage health: " + newState.enemyMageHealth);
+                    Debug.Log("AiSIM Player mage health: " + newState.enemyMageHealth);
                     newState.enemyMageHealth += (int)(newState.enemyMageHealth * 0.5); // Reduce health by 50%
                 }
                 break;
@@ -193,32 +193,32 @@ public class MinimaxAI
                 {
                     //create special attack
                     newState.playerKnightHealth -= 30;
-                    Debug.Log("Player knight health: " + newState.playerKnightHealth);
+                    Debug.Log("AiSIM Player knight health: " + newState.playerKnightHealth);
                 }
                 else if (move.target == "PlayerMage")
                 {
                     //create special attack
                     newState.playerMageHealth -= 30;
-                    Debug.Log("Player mage health: " + newState.playerMageHealth);
+                    Debug.Log("AiSIM Player mage health: " + newState.playerMageHealth);
                 }
                 break;
             case "Buff":
                 if (move.target is "EnemyKnight" or "EnemyMage")
                 {
                     newState.nextAttackBuff += 10;
-                    Debug.Log("Next attack buff increased by 10");
+                    Debug.Log("AiSIM Next attack buff increased by 10");
                 }
                 break;
             case "Heal":
                 if (move.target == "EnemyKnight")
                 {
                     newState.enemyKnightHealth += 30;
-                    Debug.Log("Enemy knight health: " + newState.enemyKnightHealth);
+                    Debug.Log("AiSIM Enemy knight health: " + newState.enemyKnightHealth);
                 }
                 else if (move.target == "EnemyMage")
                 {
                     newState.enemyMageHealth += 30;
-                    Debug.Log("Enemy mage health: " + newState.enemyMageHealth);
+                    Debug.Log("AiSIM Enemy mage health: " + newState.enemyMageHealth);
                 }
                 break;
         }
