@@ -40,7 +40,7 @@ public class Unit : MonoBehaviour
     }
 
     
-    public void Attack(string target,string attackType)
+    public void Attack( string attackType)
     {
         bool isDead = false;
 
@@ -54,6 +54,14 @@ public class Unit : MonoBehaviour
                 break;
             case "special":
                 isDead = targetUnit.TakeDamage(specialAttack);
+                break;
+            case "heal":
+                isDead = targetUnit.TakeDamage(-heal);
+                targetUnit.currentHealth += heal;
+                if (targetUnit.currentHealth > targetUnit.maxHealth)
+                {
+                    targetUnit.currentHealth = targetUnit.maxHealth;
+                }
                 break;
         }
 
@@ -91,8 +99,9 @@ public class Unit : MonoBehaviour
     }
 
 
-    public void Attack(string attackType)
+    /*public void Attack(string attackType)
     {
+        Debug.Log(unitName + " attacks " + targetUnit.unitName + " with " + attackType + " attack. Remaining HP: " + targetUnit.currentHealth);
         throw new System.NotImplementedException();
-    }
+    }*/
 }

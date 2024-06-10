@@ -206,7 +206,6 @@ public class BattleSystem : MonoBehaviour
                 // Call a method to handle player 1's turn
                 p1CharacterSelectPanel.SetActive(true);
                 p2CharacterSelectPanel.SetActive(false);
-                // Hide indicators
                 // HideIndicators();
                 break;
             case BattleState.Player2Turn:

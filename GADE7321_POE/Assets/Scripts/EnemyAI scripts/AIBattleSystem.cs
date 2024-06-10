@@ -71,7 +71,8 @@ namespace EnemyAI_scripts
 
         private string _selectedCharacter; // Currently selected character
         private string _selectedAction; // Currently selected action
-        private string _selectedEnemy; // Currently selected enemy
+        private string _selectedEnemy;
+        // Currently selected enemy
     
         public AIBattleState state; // Current state of the battle
         private MinimaxAI _minimaxAI; // Instance of the MinimaxAI class
@@ -118,6 +119,8 @@ namespace EnemyAI_scripts
                 playerMageHealth = 80,
                 enemyKnightHealth = 100,
                 enemyMageHealth = 80,
+                nextAttackBuff = 10,
+                
                 currentState = AIBattleState.AIStart,
                 isPlayerTurn = true
             };
@@ -227,6 +230,10 @@ namespace EnemyAI_scripts
             dialogueText.text = "Enemy " + bestMove.action + " " + bestMove.target; // Log the AI's move
             Debug.Log("Enemy " + bestMove.action + " " + bestMove.target);
             
+            //update HP sliders
+            
+            
+            
             yield return new WaitForSeconds(2f); // Wait for a second before the AI makes its next move
 
             if (CheckForWinner()) // Check if there's a winner
@@ -259,7 +266,7 @@ namespace EnemyAI_scripts
                 Debug.Log("mage selected");
                 EnablePanel(mageActionPanel, true);
             }
-            
+
             
         }
 
@@ -305,6 +312,7 @@ namespace EnemyAI_scripts
         void OnEnemySelect(string enemy)
         {
             _selectedEnemy = enemy;
+            
             EnablePanel(enemySelectPanel, false);
 
             if (enemy == "EnemyKnight")
@@ -317,61 +325,14 @@ namespace EnemyAI_scripts
                 dialogueText.text = enemy + " selected.";
                 Debug.Log("Enemy mage selected");
             }
-            // Find the target unit and perform the selected action
-            /*
-            Unit target = null;
-            if (enemy == "EnemyKnight")
-            {
-                target = enemy1HUD.unit;
-                Debug.Log("Enemy knight selected");
-            }
-            else if (enemy == "EnemyMage")
-            {
-                target = enemy2HUD.unit;
-                Debug.Log("Enemy mage selected");
-            }
-
-            // Perform the selected action on the target unit
-            if (_selectedCharacter == "Knight")
-            {
-                playerKnightHUD.unit.targetUnit = target;
-                playerKnightHUD.unit.Attack(_selectedAction);
-            }
-            else if (_selectedCharacter == "Mage")
-            {
-                playerMageHUD.unit.targetUnit = target;
-                if (_selectedAction == "heal")
-                {
-                    playerMageHUD.unit.Heal(target);
-                }
-                else if (_selectedAction == "buff")
-                {
-                    playerMageHUD.unit.ApplyBuff(target);
-                }
-                else
-                {
-                    playerMageHUD.unit.Attack(_selectedAction);
-                }
-            }*/
             
-            Unit targetUnit = null;
-            
-            switch (enemy)
+            if (_selectedCharacter != null && enemy != null)
             {
-                case "Knight":
-                    targetUnit = enemyKnight;
-                    break;
-                case "Mage":
-                    targetUnit = enemyMage;
-                    break;
+               //_selectedCharacter.Attack(enemy, _selectedAction);
+               Debug.Log("Selected Character: " + _selectedCharacter + " Target Unit: " + enemy + " Action: " + _selectedAction); // Log the selected character and action();
             }
 
-            if (_selectedCharacter != null && targetUnit != null)
-            {
-               //_selectedCharacter.Attack(_selectedEnemy, _selectedAction);
-               Debug.Log("Selected Character: " + _selectedCharacter + " Target Unit: " + targetUnit + " Action: " + _selectedAction); // Log the selected character and action();
-            }
-
+            _selectedCharacter.Attack(_selectedEnemy, _selectedAction); // Attack the enemy();
             EnablePanel(enemySelectPanel, false);
             state = AIBattleState.AIEnemyTurn;
             StartCoroutine(EnemyTurn());
@@ -379,6 +340,15 @@ namespace EnemyAI_scripts
 
         void EndBattle()
         {
+            if (playerUnit1.currentHealth <= 0 || playerUnit2.currentHealth <= 0)
+            {
+                state = AIBattleState.AIWinner;
+            }
+            else if (enemyUnit1.currentHealth <= 0 || enemyUnit2.currentHealth <= 0)
+            {
+                state = AIBattleState.AIWinner;
+            }
+            
             if (state == AIBattleState.AIWinner)
             {
                 dialogueText.text = "You won!";
@@ -392,6 +362,18 @@ namespace EnemyAI_scripts
         bool CheckForWinner()
         {
             // Check if any player has won
+            if (playerUnit1.currentHealth <= 0 || playerUnit2.currentHealth <= 0)
+            {
+                state = AIBattleState.AIWinner;
+                return true;
+            }
+
+            // Check if any enemy has won
+            if (enemyUnit1.currentHealth <= 0 || enemyUnit2.currentHealth <= 0)
+            {
+                state = AIBattleState.AIWinner;
+                return true;
+            }
             // Add logic to check if all enemy units or player units are dead
             return false;
         }
