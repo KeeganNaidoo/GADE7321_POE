@@ -121,11 +121,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: Skeleton White
   meleeDamage: 10
-  rangedDamage: 0
+  rangedDamage: 8
   block: 0
   buff: 0
-  specialAttack: 0
-  heal: 0
+  specialAttack: 15
+  heal: 10
   maxHealth: 50
   currentHealth: 50
   targetUnit: {fileID: 0}

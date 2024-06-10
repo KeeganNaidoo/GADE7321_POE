@@ -11,7 +11,7 @@ public class BattleHUD : MonoBehaviour
 
     public void SetHUD(Unit unit)
     {
-        this.unit = unit;
+            
         nameText.text = unit.unitName;
         hpSlider.maxValue = unit.maxHealth;
         hpSlider.value = unit.currentHealth;
@@ -20,5 +20,10 @@ public class BattleHUD : MonoBehaviour
     public void SetHP(int hp)
     {
         hpSlider.value = hp;
+    }
+
+    public void SetHP(Unit playerUnit1)
+    {
+        throw new System.NotImplementedException();
     }
 }

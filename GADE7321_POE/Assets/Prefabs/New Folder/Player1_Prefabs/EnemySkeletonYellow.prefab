@@ -121,11 +121,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitName: Skeleton Yellow
   meleeDamage: 10
-  rangedDamage: 0
+  rangedDamage: 8
   block: 0
   buff: 0
-  specialAttack: 0
-  heal: 0
+  specialAttack: 15
+  heal: 10
   maxHealth: 60
   currentHealth: 60
   targetUnit: {fileID: 0}

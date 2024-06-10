@@ -457,10 +457,10 @@ MonoBehaviour:
   playerMageHUDPosition: {fileID: 1419528032}
   enemy1HUDPosition: {fileID: 736151239}
   enemy2HUDPosition: {fileID: 966458363}
-  playerUnit1: {fileID: 0}
-  playerUnit2: {fileID: 0}
-  enemyUnit1: {fileID: 0}
-  enemyUnit2: {fileID: 0}
+  playerUnit1: {fileID: 2615793565144902452, guid: 546b6cb89464ac74f98b8d3a4877048b, type: 3}
+  playerUnit2: {fileID: 5534907091721304630, guid: 660ee73370585b3499db096e8ab204d7, type: 3}
+  enemyUnit1: {fileID: 5592875607834973450, guid: e17ebc65feabb3d4185cf7742c62cfa8, type: 3}
+  enemyUnit2: {fileID: 8085814069718456253, guid: 35ee28711fbe7264da7594a9ad12d425, type: 3}
   knightButton: {fileID: 1964189603}
   mageButton: {fileID: 488784952}
   knightMeleeButton: {fileID: 1549840769}
