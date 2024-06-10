@@ -332,7 +332,7 @@ namespace EnemyAI_scripts
                Debug.Log("Selected Character: " + _selectedCharacter + " Target Unit: " + enemy + " Action: " + _selectedAction); // Log the selected character and action();
             }
 
-            _selectedCharacter.Attack(_selectedEnemy, _selectedAction); // Attack the enemy();
+            //_selectedCharacter.Attack(_selectedEnemy, _selectedAction); // Attack the enemy();
             EnablePanel(enemySelectPanel, false);
             state = AIBattleState.AIEnemyTurn;
             StartCoroutine(EnemyTurn());
